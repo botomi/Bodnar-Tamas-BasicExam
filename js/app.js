@@ -250,6 +250,7 @@ function successAjax(xhttp) {
   removeConsumable(sort);
   swapNulltoUnkown(sort);
   toHTML(sort);
+  console.log(sort);
   show(`There are ${shipsWithOneCrew(sort)} ships with 1 crew member only.`);
   show(`Ship with highest cargo capacity is the ${showMaxCargoCapacity(sort)}`);
   show(`There are ${passengerSum(sort)} passenger seats altogether.`);
