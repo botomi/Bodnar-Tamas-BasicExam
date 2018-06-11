@@ -12,7 +12,7 @@ function getData(url, callbackFunc) {
 function successAjax(xhttp) {
   // Innen lesz elérhető a JSON file tartalma, tehát az adatok amikkel dolgoznod kell
   var userDatas = JSON.parse(xhttp.responseText);
-
+  // Separate objects into to arrays. Puts the one with values in order and then joins them together.
   function separateAndSortAsc(array) {
     var nullArr = [];
     var numArr = [];
@@ -42,7 +42,7 @@ function successAjax(xhttp) {
     var sorted = nullArr.concat(numArr);
     return sorted;
   }
-
+  // remove all objects where consumable value is null
   function removeConsumable(array) {
     for (let i = 0; i < array.length; i++) {
       if (array[i].consumables === null) {
@@ -52,7 +52,7 @@ function successAjax(xhttp) {
     }
     return array;
   }
-
+  // Swaps all null value to unkown
   function swapNulltoUnkown(array) {
     for (let i = 0; i < array.length; i++) {
       for (const member in array[i]) {
@@ -62,7 +62,7 @@ function successAjax(xhttp) {
       }
     }
   }
-
+  // displays all remaining objects on HTML
   function toHTML(array) {
     var mainDiv = document.querySelector('.shapceship-list');
     for (let i = 0; i < array.length; i++) {
@@ -81,7 +81,7 @@ function successAjax(xhttp) {
       var hr = document.createElement('hr')
       individualDiv.classList.add('inDiv');
       img.setAttribute('src', `img/${array[i].image}`);
-      img.setAttribute('alt', 'The picture of the starship is not in our database, we apologize for any inconvenience it may cause.');
+      img.setAttribute('alt', `${array[i].image}`);
       modelP.innerText = `Model: ${array[i].model}`;
       manufacturerP.innerText = `Manufacturer: ${array[i].manufacturer}`;
       denominationP.innerText = `Denomination: ${array[i].denomination}`;
@@ -108,14 +108,14 @@ function successAjax(xhttp) {
 
     }
   }
-
+  // basic DOM function to be able to display result of functions easily
   function show(result) {
     var div = document.querySelector('.shapceship-list');
     var p = document.createElement('p');
     p.innerText = result;
     div.appendChild(p);
   }
-
+  // calculates how many ships are there with only 1 possible crew member
   function shipsWithOneCrew(array) {
     var db = 0;
     for (let i = 0; i < array.length; i++) {
@@ -125,7 +125,7 @@ function successAjax(xhttp) {
     }
     return db;
   }
-
+  // Returns the object with the biggest cargo capacity
   function showMaxCargoCapacity(array) {
     var max = array[0];
     for (let i = 0; i < array.length; i++) {
@@ -135,7 +135,7 @@ function successAjax(xhttp) {
     }
     return max.model;
   }
-
+  // Sums all the passenger seats in every single ship
   function passengerSum(array) {
     var sum = 0;
     for (let i = 0; i < array.length; i++) {
@@ -145,7 +145,7 @@ function successAjax(xhttp) {
     }
     return sum;
   }
-
+  // Returns the object where the ship is the longest
   function longestShip(array) {
     var max = array[0];
     for (let i = 0; i < array.length; i++) {
@@ -163,12 +163,12 @@ function successAjax(xhttp) {
     div.appendChild(decP);
     div.appendChild(img);
   }
-
+  // Adds an eventlistener to the searchbutton
   function addeventListener() {
     var button = document.getElementById('search-button');
     button.addEventListener('click', linearSearch);
   }
-
+  // Creates the structure of the right-side div
   function createRightSide() {
     var mainDiv = document.querySelector('.one-spaceship');
     var individualDiv = document.createElement('div');
@@ -209,17 +209,10 @@ function successAjax(xhttp) {
     individualDiv.appendChild(costP);
   }
 
+  // Search engine... it works, but it's ugly and incorrect
   function linearSearch() {
     var array;
     var value = document.getElementById('search-text').value;
-    for (let i = 0; i < sort.length; i++) {
-      if (sort[i].model.toString().toLowerCase().indexOf(value.toLowerCase()) > -1) {
-        array = sort[i];
-        break;
-      } else {
-        array = 'No result!';
-      }
-    }
     var img = document.querySelector('.divimg');
     var modelP = document.querySelector('.modelP');
     var manufacturerP = document.querySelector('.manufacturerP');
@@ -231,21 +224,43 @@ function successAjax(xhttp) {
     var consumablesP = document.querySelector('.consumablesP');
     var atmospheringSpeedP = document.querySelector('.atmospheringSpeedP');
     var costP = document.querySelector('.costP');
-    img.setAttribute('src', `img/${array.image}`);
-    img.setAttribute('alt', 'no pic');
-    modelP.innerText = `Model: ${array.model}`;
-    manufacturerP.innerText = `Manufacturer: ${array.manufacturer}`;
-    denominationP.innerText = `Denomination: ${array.denomination}`;
-    cargoP.innerText = `Cargo capacity: ${array.cargo_capacity}`;
-    passengersP.innerText = `Passengers: ${array.passengers}`;
-    crewP.innerText = `Crew: ${array.crew}`;
-    lengthinessP.innerText = `Lengthiness: ${array.lengthiness}`;
-    consumablesP.innerText = `Consumables: ${array.consumables}`;
-    atmospheringSpeedP.innerText = `Maximum atmosphering speed: ${array.max_atmosphering_speed}`;
-    costP.innerText = `Cost: ${array.cost_in_credits}`;
+    for (let i = 0; i < sort.length; i++) {
+      if (sort[i].model.toString().toLowerCase().indexOf(value.toLowerCase()) > -1) {
+        array = sort[i];
+        img.setAttribute('src', `img/${array.image}`);
+        img.setAttribute('alt', 'no pic');
+        modelP.innerText = `Model: ${array.model}`;
+        manufacturerP.innerText = `Manufacturer: ${array.manufacturer}`;
+        denominationP.innerText = `Denomination: ${array.denomination}`;
+        cargoP.innerText = `Cargo capacity: ${array.cargo_capacity}`;
+        passengersP.innerText = `Passengers: ${array.passengers}`;
+        crewP.innerText = `Crew: ${array.crew}`;
+        lengthinessP.innerText = `Lengthiness: ${array.lengthiness}`;
+        consumablesP.innerText = `Consumables: ${array.consumables}`;
+        atmospheringSpeedP.innerText = `Maximum atmosphering speed: ${array.max_atmosphering_speed}`;
+        costP.innerText = `Cost: ${array.cost_in_credits}`;
+        break;
+      }
+    }
+    if (typeof array === "undefined") {
+      modelP.innerText = 'NO RESULT';
+      img.setAttribute('src', null);
+      img.setAttribute('alt', '');
+      manufacturerP.innerText = null;
+      denominationP.innerText = null;
+      cargoP.innerText = null;
+      passengersP.innerText = null;
+      crewP.innerText = null;
+      lengthinessP.innerText = null;
+      consumablesP.innerText = null;
+      atmospheringSpeedP.innerText = null;
+      costP.innerText = null;
+    }
+
 
   }
 
+  // function calls:
   var sort = separateAndSortAsc(userDatas);
   removeConsumable(sort);
   swapNulltoUnkown(sort);

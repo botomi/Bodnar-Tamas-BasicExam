@@ -1,3 +1,8 @@
+@font-face {
+  font-family: starWarsFont;
+  src: url('../fonts/DeathStar.otf')
+}
+
 body {
   margin: 0;
   font-size: 16px;
@@ -34,6 +39,7 @@ div {
 }
 
 .one-spaceship {
+  font-family: 'Lato', sans-serif;
   width: 100%;
   background: #000;
   color: white;
@@ -64,8 +70,19 @@ div {
 }
 
 .inDiv {
+  font-family: 'Lato', sans-serif;
   display: inline-block;
   width: 30%;
+}
+
+.inDiv img {
+  font-family: 'Lato', sans-serif;
+  border-radius: 25px;
+}
+
+h1 {
+  font-family: starWarsFont;
+  letter-spacing: 3px;
 }
 
 @media(min-width:1200px) {
