@@ -33,6 +33,7 @@ div {
 }
 
 .shapceship-list {
+  font-family: 'Lato', sans-serif;
   width: 100%;
   background: #0b88c5;
   overflow: auto
@@ -70,19 +71,21 @@ div {
 }
 
 .inDiv {
-  font-family: 'Lato', sans-serif;
   display: inline-block;
   width: 30%;
 }
 
 .inDiv img {
+  font-style: italic;
   font-family: 'Lato', sans-serif;
   border-radius: 25px;
 }
 
 h1 {
+  font-size: 36pt;
   font-family: starWarsFont;
-  letter-spacing: 3px;
+  letter-spacing: 5px;
+  padding: 15px;
 }
 
 @media(min-width:1200px) {

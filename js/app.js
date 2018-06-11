@@ -228,7 +228,7 @@ function successAjax(xhttp) {
       if (sort[i].model.toString().toLowerCase().indexOf(value.toLowerCase()) > -1) {
         array = sort[i];
         img.setAttribute('src', `img/${array.image}`);
-        img.setAttribute('alt', 'no pic');
+        img.setAttribute('alt', `${array.image}`);
         modelP.innerText = `Model: ${array.model}`;
         manufacturerP.innerText = `Manufacturer: ${array.manufacturer}`;
         denominationP.innerText = `Denomination: ${array.denomination}`;
@@ -259,8 +259,13 @@ function successAjax(xhttp) {
 
 
   }
+  // Changes title to Star Wars
+  function changeTitle() {
+    document.title = 'Star Wars';
+  }
 
   // function calls:
+  changeTitle();
   var sort = separateAndSortAsc(userDatas);
   removeConsumable(sort);
   swapNulltoUnkown(sort);
